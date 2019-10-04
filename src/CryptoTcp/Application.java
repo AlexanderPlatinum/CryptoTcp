@@ -21,7 +21,7 @@ public class Application {
     }
 
     public static void main (String [] args) {
-        IApp app = getApp(AppType.SERVER);
+        IApp app = getApp(AppType.CLIENT);
 
         app.SetHost("localhost");
         app.SetPort(7777);

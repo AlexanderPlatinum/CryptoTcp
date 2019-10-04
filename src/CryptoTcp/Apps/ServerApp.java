@@ -39,7 +39,7 @@ public class ServerApp implements IApp {
         String word = reader.readLine();
         System.out.println(word);
 
-        writer.write("OK!");
+        writer.write("OK!\n");
         writer.flush();
 
         closeAll();
