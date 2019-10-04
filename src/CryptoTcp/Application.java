@@ -1,13 +1,7 @@
 package CryptoTcp;
 
-import CryptoTcp.Algorithms.AlgorithmType;
-import CryptoTcp.Algorithms.DHAlgorithm;
-import CryptoTcp.Algorithms.IAlgorithm;
-import CryptoTcp.Algorithms.RSAAlgorithm;
-import CryptoTcp.Apps.AppType;
-import CryptoTcp.Apps.ClientApp;
-import CryptoTcp.Apps.IApp;
-import CryptoTcp.Apps.ServerApp;
+import CryptoTcp.Apps.*;
+import CryptoTcp.Algorithms.*;
 
 import java.io.IOException;
 

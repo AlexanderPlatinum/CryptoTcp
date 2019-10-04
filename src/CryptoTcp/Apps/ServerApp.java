@@ -51,6 +51,8 @@ public class ServerApp implements IApp {
 
         algorithm.Run(false);
 
+        System.out.println("Key := " + algorithm.GetKey().toString());
+
         closeAll();
     }
 

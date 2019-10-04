@@ -44,6 +44,8 @@ public class ClientApp implements IApp {
 
         algorithm.Run(true);
 
+        System.out.println("Key := " + algorithm.GetKey().toString());
+
         closeAll();
     }
 
