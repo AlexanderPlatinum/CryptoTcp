@@ -12,4 +12,5 @@ public interface IAlgorithm {
     void Run(boolean isClient) throws IOException;
 
     BigInteger GetKey();
+    void SetKey(BigInteger key);
 }

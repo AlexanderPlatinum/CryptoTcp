@@ -55,6 +55,11 @@ public class DHAlgorithm implements IAlgorithm {
         return key;
     }
 
+    @Override
+    public void SetKey(BigInteger key) {
+        this.key = key;
+    }
+
     private void logicClient() throws IOException {
         String _g = reader.readLine();
         String _p = reader.readLine();

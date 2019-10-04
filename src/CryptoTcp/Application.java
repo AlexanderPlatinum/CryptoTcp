@@ -33,7 +33,7 @@ public class Application {
 
     public static void main (String [] args) {
         IApp app = getApp(AppType.CLIENT);
-        IAlgorithm algorithm = getAlgorithm(AlgorithmType.DH);
+        IAlgorithm algorithm = getAlgorithm(AlgorithmType.RSA);
 
         app.SetAlgorithm(algorithm);
 

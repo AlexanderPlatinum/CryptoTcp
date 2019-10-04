@@ -3,6 +3,7 @@ package CryptoTcp.Apps;
 import CryptoTcp.Algorithms.IAlgorithm;
 
 import java.io.*;
+import java.math.BigInteger;
 import java.net.Socket;
 
 public class ClientApp implements IApp {
@@ -38,6 +39,8 @@ public class ClientApp implements IApp {
 
         reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+
+        algorithm.SetKey(BigInteger.valueOf(35));
 
         algorithm.SetReader(reader);
         algorithm.SetWriter(writer);
