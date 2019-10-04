@@ -11,23 +11,40 @@ public class RSAAlgorithm implements IAlgorithm {
     private BufferedReader reader;
     private BufferedWriter writer;
 
-    private int p;
-    private int q;
+    private BigInteger p;
+    private BigInteger q;
 
-    private int n;
+    private BigInteger n;
 
-    private int e;
-    private int d;
+    private BigInteger e;
+    private BigInteger d;
 
     private BigInteger key;
+
+    private static final int INT_WIDTH = 8;
 
     public RSAAlgorithm () {
         Random random = new Random();
 
-        p = random.nextInt(100) + 1;
-        q = random.nextInt(100) + 1;
+        p = BigInteger.probablePrime(INT_WIDTH, random);
 
-        e = random.nextInt(100) + 1;
+        do {
+
+            q = BigInteger.probablePrime(INT_WIDTH, random);
+
+        } while (q.compareTo(p) == 0);
+
+        n = p.multiply(q);
+
+        BigInteger fi = (p.subtract(BigInteger.ONE)).multiply((q.subtract(BigInteger.ONE)));
+
+        do {
+
+            e = BigInteger.probablePrime(INT_WIDTH, random);
+
+        } while (fi.gcd(e).compareTo(BigInteger.ONE) > 0 && e.compareTo(fi) > 0 && e.compareTo(BigInteger.ONE) > 0);
+
+        d = e.modInverse(fi);
     }
 
     @Override
@@ -63,52 +80,39 @@ public class RSAAlgorithm implements IAlgorithm {
         String _e = reader.readLine();
         String _n = reader.readLine();
 
-        e = Integer.parseInt(_e);
-        n = Integer.parseInt(_n);
+        e = new BigInteger(_e);
+        n = new BigInteger(_n);
 
-        int msg = encode(key.intValue());
-        writer.write(Integer.toString(msg));
+        BigInteger encoded = encode(key);
+
+        writer.write(encoded.toString());
         writer.newLine();
         writer.flush();
     }
 
     private void logicServer () throws IOException {
-        n = calcN();
-        d = calcD();
 
         System.out.println(e);
         System.out.println(n);
         System.out.println(d);
 
-        writer.write(Integer.toString(e));
+        writer.write(e.toString());
         writer.newLine();
         writer.flush();
 
-        writer.write(Integer.toString(n));
+        writer.write(n.toString());
         writer.newLine();
         writer.flush();
 
         String message = reader.readLine();
-        int decoded = decode(Integer.parseInt(message));
-
-        key = BigInteger.valueOf(decoded);
+        key = decode(new BigInteger(message));
     }
 
-    private int calcN () {
-        return p * q;
+    private BigInteger encode (BigInteger key) {
+        return key.pow(e.intValue()).mod(n);
     }
 
-    private int calcD () {
-        int fi = (p - 1) * (q - 1);
-        return 0; // todo: need calc
+    private BigInteger decode (BigInteger key) {
+        return key.pow(d.intValue()).mod(n);
     }
-
-    private int encode (int key) {
-        return (int)Math.pow(key, e) % n;
-    }
-
-    private int decode (int key) {
-        return (int)Math.pow(key, d) % n;
-    }
-
 }
