@@ -1,5 +1,7 @@
 package CryptoTcp.Apps;
 
+import CryptoTcp.Algorithms.IAlgorithm;
+
 import java.io.*;
 import java.net.Socket;
 
@@ -13,6 +15,8 @@ public class ClientApp implements IApp {
     private String host;
     private int port;
 
+    private IAlgorithm algorithm;
+
     @Override
     public void SetHost(String host) {
         this.host = host;
@@ -24,17 +28,23 @@ public class ClientApp implements IApp {
     }
 
     @Override
+    public void SetAlgorithm(IAlgorithm algorithm) {
+        this.algorithm = algorithm;
+    }
+
+    @Override
     public void Run() throws IOException {
         socket = new Socket(host, port);
 
         reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
 
-        writer.write("I am client!\n");
-        writer.flush();
+        algorithm.SetReader(reader);
+        algorithm.SetWriter(writer);
 
-        String status = reader.readLine();
-        System.out.println(status);
+        algorithm.Run(true);
+
+        closeAll();
     }
 
     private void closeAll() throws IOException {
