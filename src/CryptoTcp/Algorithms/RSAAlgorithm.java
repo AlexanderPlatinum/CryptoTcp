@@ -91,11 +91,6 @@ public class RSAAlgorithm implements IAlgorithm {
     }
 
     private void logicServer () throws IOException {
-
-        System.out.println(e);
-        System.out.println(n);
-        System.out.println(d);
-
         writer.write(e.toString());
         writer.newLine();
         writer.flush();
